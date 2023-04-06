@@ -20,17 +20,19 @@ export default function QuranAyat({ navigation, route }) {
             paddingHorizontal: 30,
             paddingVertical: 80,
         }}>
-            <MyPicker label="Pilih Jadwal baca" onValueChange={x => setKirim({ ...kirim, jadwal_baca: x })} iconname="repeat" data={[
-                { label: '1x baca', value: 1 },
-                { label: '3x baca', value: 3 },
-                { label: '5x baca', value: 5 },
-            ]} />
-            <MyGap jarak={10} />
             <MyPicker label="Pilih Jumlah Ayat" onValueChange={x => setKirim({ ...kirim, jumlah_ayat: x })} iconname="book-outline" data={[
                 { label: '1 Ayat', value: 1 },
                 { label: '3 Ayat', value: 3 },
                 { label: '5 Ayat', value: 5 },
             ]} />
+            <MyGap jarak={10} />
+            <MyPicker label="Pilih Jadwal baca" onValueChange={x => setKirim({ ...kirim, jadwal_baca: x })} iconname="repeat" data={[
+                { label: '1x baca', value: 1 },
+                { label: '3x baca', value: 3 },
+                { label: '5x baca', value: 5 },
+            ]} />
+
+
             <MyGap jarak={30} />
             <MyButton onPress={() => {
                 console.log(kirim);

@@ -17,6 +17,7 @@ import Carousel, { ParallaxImage, Pagination } from 'react-native-snap-carousel'
 import { SliderBox } from "react-native-image-slider-box";
 import ZavalabsScanner from 'react-native-zavalabs-scanner'
 import moment from 'moment';
+import 'moment/locale/id'
 
 export default function Home({ navigation }) {
 
@@ -34,9 +35,17 @@ export default function Home({ navigation }) {
   }, [isFocused]);
 
   const __getTransaction = () => {
+
+
+
     getData('user').then(res => {
-      setUser(res);
-      console.log(res)
+      axios.post(apiURL + 'user_data', {
+        id: res.id
+      }).then(u => {
+        console.log('data terupdate', u.data);
+        setUser(u.data);
+        storeData('user', u.data);
+      })
     })
 
 
@@ -104,6 +113,11 @@ export default function Home({ navigation }) {
         justifyContent: 'center',
         alignItems: 'center'
       }}>
+        <Text style={{
+          fontFamily: fonts.secondary[600],
+          fontSize: 20,
+          marginBottom: 20
+        }}>{moment().format('LLL')}</Text>
         <Image source={require('../../assets/logo.png')} style={{
           width: windowWidth / 1.2,
         }} />
@@ -147,7 +161,15 @@ export default function Home({ navigation }) {
               ])
             } else {
               if (user.jadwal_baca !== 0) {
-                navigation.navigate('QuranAyatBaca', user)
+
+                if (user.tanggal_today == moment().format('YYYY-MM-DD') && user.jumlah_today == user.jadwal_baca) {
+                  Alert.alert(MYAPP, 'Hari ini kamu sudah membaca sebanyak ' + user.jumlah_today + 'x Silahkan membaca lagi besok !')
+                } else {
+                  navigation.navigate('QuranAyatBaca', user)
+                }
+
+
+
               } else {
                 navigation.navigate('QuranAyat', user)
               }
@@ -168,7 +190,34 @@ export default function Home({ navigation }) {
 
         {(user.jenis == 0 || user.jenis == 2) && <TouchableOpacity
           onPress={() => {
+            if (user.jenis == 0) {
 
+              Alert.alert(MYAPP, 'Kamu yakin akan baca one page ini sampai khatam ?', [
+                { text: 'TIDAK' },
+                {
+                  text: 'IYA',
+                  onPress: () => {
+
+                    axios.post(apiURL + 'user_jenis', {
+                      id: user.id,
+                      jenis: 2,
+                    }).then(res => {
+                      console.log('user hasil', res.data);
+                      setUser(res.data);
+                      storeData('user', res.data);
+                      navigation.navigate('QuranPage', user)
+                    })
+
+                  }
+                }
+              ])
+            } else {
+              if (user.tanggal_today == moment().format('YYYY-MM-DD') && user.jumlah_today == user.jadwal_baca) {
+                Alert.alert(MYAPP, 'Hari ini kamu sudah membaca sebanyak ' + user.jumlah_today + ' page Silahkan membaca lagi besok !')
+              } else {
+                navigation.navigate('QuranPage', user)
+              }
+            }
           }}
 
           style={{
@@ -182,7 +231,34 @@ export default function Home({ navigation }) {
 
         {(user.jenis == 0 || user.jenis == 3) && <TouchableOpacity
           onPress={() => {
+            if (user.jenis == 0) {
 
+              Alert.alert(MYAPP, 'Kamu yakin akan baca one sheet ini sampai khatam ?', [
+                { text: 'TIDAK' },
+                {
+                  text: 'IYA',
+                  onPress: () => {
+
+                    axios.post(apiURL + 'user_jenis', {
+                      id: user.id,
+                      jenis: 3,
+                    }).then(res => {
+                      console.log('user hasil', res.data);
+                      setUser(res.data);
+                      storeData('user', res.data);
+                      navigation.navigate('QuranSheet', user)
+                    })
+
+                  }
+                }
+              ])
+            } else {
+              if (user.tanggal_today == moment().format('YYYY-MM-DD') && user.jumlah_today == user.jadwal_baca) {
+                Alert.alert(MYAPP, 'Hari ini kamu sudah membaca sebanyak ' + user.jumlah_today + ' sheet Silahkan membaca lagi besok !')
+              } else {
+                navigation.navigate('QuranSheet', user)
+              }
+            }
           }}
 
           style={{
@@ -196,6 +272,35 @@ export default function Home({ navigation }) {
 
         {(user.jenis == 0 || user.jenis == 4) && <TouchableOpacity
           onPress={() => {
+
+            if (user.jenis == 0) {
+
+              Alert.alert(MYAPP, 'Kamu yakin akan baca one juz ini sampai khatam ?', [
+                { text: 'TIDAK' },
+                {
+                  text: 'IYA',
+                  onPress: () => {
+
+                    axios.post(apiURL + 'user_jenis', {
+                      id: user.id,
+                      jenis: 4,
+                    }).then(res => {
+                      console.log('user hasil', res.data);
+                      setUser(res.data);
+                      storeData('user', res.data);
+                      navigation.navigate('QuranJuz', user)
+                    })
+
+                  }
+                }
+              ])
+            } else {
+              if (user.tanggal_today == moment().format('YYYY-MM-DD') && user.jumlah_today == user.jadwal_baca) {
+                Alert.alert(MYAPP, 'Hari ini kamu sudah membaca sebanyak ' + user.jumlah_today + ' juz Silahkan membaca lagi besok !')
+              } else {
+                navigation.navigate('QuranJuz', user)
+              }
+            }
 
           }}
 

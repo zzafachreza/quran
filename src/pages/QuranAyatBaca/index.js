@@ -4,6 +4,7 @@ import { MyButton, MyGap, MyPicker } from '../../components';
 import { colors, fonts } from '../../utils';
 import axios from 'axios';
 import { apiURL, MYAPP, storeData } from '../../utils/localStorage';
+import moment from 'moment';
 
 export default function QuranAyatBaca({ navigation, route }) {
     const [user, setUser] = useState(route.params)
@@ -15,7 +16,7 @@ export default function QuranAyatBaca({ navigation, route }) {
             jadwal_baca: user.jadwal_baca,
             jumlah_ayat: user.jumlah_ayat
         }).then(res => {
-            console.log(res.data);
+            console.log('data quran yang di baca', res.data);
             setData(res.data);
         })
     }, []);
@@ -49,18 +50,41 @@ export default function QuranAyatBaca({ navigation, route }) {
                 })}
             </View>
             <MyButton warna={colors.primary} title="SELESAI" onPress={() => {
-                // alert(data[data.length - 1].id);
-                axios.post(apiURL + 'user_ubah_last', {
-                    fid_quran: data[data.length - 1].id,
-                    id: user.id
-                }).then(res => {
-                    console.log(res.data);
-                    storeData('user', res.data);
-                    Alert.alert(MYAPP, 'Alhamdulillah Barakallahu fiikum')
-                    navigation.replace('Home');
+                console.log(data[data.length - 1].id);
+
+                if (parseInt(data[data.length - 1].id) == 6236) {
+                    console.log('Khatam');
 
 
-                })
+                    axios.post(apiURL + 'user_ubah_khatam', {
+
+                        id: user.id,
+
+                    }).then(res => {
+                        console.log(res.data);
+                        // storeData('user', res.data);
+                        Alert.alert(MYAPP, 'Alhamdulillah Barakallahu fiikum')
+                        navigation.replace('Khatam');
+
+
+                    })
+                } else {
+                    axios.post(apiURL + 'user_ubah_last', {
+                        fid_quran: parseInt(data[data.length - 1].id) + 1,
+                        id: user.id,
+                        jadwal_baca: user.jadwal_baca,
+                        tanggal_today: user.tanggal_today,
+                        jumlah_today: user.jumlah_today,
+                    }).then(res => {
+                        console.log(res.data);
+                        // storeData('user', res.data);
+                        Alert.alert(MYAPP, 'Alhamdulillah Barakallahu fiikum')
+                        navigation.replace('Home');
+
+
+                    })
+                }
+
 
             }} />
         </ImageBackground>

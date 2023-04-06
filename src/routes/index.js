@@ -10,6 +10,10 @@ import {
   AccountEdit,
   QuranAyat,
   QuranAyatBaca,
+  Khatam,
+  QuranPage,
+  QuranSheet,
+  QuranJuz,
 } from '../pages';
 import { colors } from '../utils';
 
@@ -105,6 +109,61 @@ export default function Router() {
         options={{
           headerShown: false,
           headerTitle: 'One Ayat',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+          headerTintColor: '#fff',
+        }}
+      />
+
+
+      <Stack.Screen
+        name="QuranPage"
+        component={QuranPage}
+        options={{
+          headerShown: false,
+          headerTitle: 'One Page',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+          headerTintColor: '#fff',
+        }}
+      />
+
+
+
+      <Stack.Screen
+        name="QuranSheet"
+        component={QuranSheet}
+        options={{
+          headerShown: false,
+          headerTitle: 'One Sheet',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+          headerTintColor: '#fff',
+        }}
+      />
+
+      <Stack.Screen
+        name="QuranJuz"
+        component={QuranJuz}
+        options={{
+          headerShown: false,
+          headerTitle: 'One Juz',
+          headerStyle: {
+            backgroundColor: colors.primary,
+          },
+          headerTintColor: '#fff',
+        }}
+      />
+
+      <Stack.Screen
+        name="Khatam"
+        component={Khatam}
+        options={{
+          headerShown: false,
+          headerTitle: 'Doa Khatam Quran',
           headerStyle: {
             backgroundColor: colors.primary,
           },

@@ -9,6 +9,7 @@ import QuranPage from './QuranPage';
 import QuranSheet from './QuranSheet';
 import QuranJuz from './QuranJuz';
 import QuranAyatBaca from './QuranAyatBaca';
+import Khatam from './Khatam';
 
 
 // NEW
@@ -38,6 +39,6 @@ export {
   QuranPage,
   QuranSheet,
   QuranJuz,
-
+  Khatam
 
 };
